@@ -1,0 +1,17 @@
+# Core dependencies
+numpy
+pandas
+scikit-learn
+
+# API
+fastapi
+uvicorn[standard]
+pydantic
+
+# Data processing
+# kafka-python
+# redis
+
+# Utils
+python-dotenv
+pyyaml

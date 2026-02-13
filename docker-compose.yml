@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  api:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      - API_HOST=0.0.0.0
+      - API_PORT=8000
+    volumes:
+      - ./models:/app/models
+      - ./configs:/app/configs
+    # Uncomment if using Redis
+    # depends_on:
+    #   - redis
+
+  # Uncomment if using Redis for feature store
+  # redis:
+  #   image: redis:7-alpine
+  #   ports:
+  #     - "6379:6379"
+
+  # Uncomment if using Kafka
+  # kafka:
+  #   image: confluentinc/cp-kafka:latest
+  #   ports:
+  #     - "9092:9092"
+  #   environment:
+  #     KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+  #     KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092

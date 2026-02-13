@@ -1,0 +1,16 @@
+-r requirements.txt
+
+# Testing
+pytest
+pytest-cov
+
+# Jupyter
+jupyter
+ipykernel
+matplotlib
+seaborn
+
+# Code quality
+black
+flake8
+mypy
