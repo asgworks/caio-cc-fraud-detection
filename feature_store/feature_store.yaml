@@ -1,0 +1,13 @@
+project: fraud_detection
+# Registry to track feature definitions
+registry: data/feast_registry.db
+# Local provider for development
+provider: local
+# Online store for real-time feature serving
+online_store:
+    type: sqlite
+    path: data/feast_online_store.db
+# Offline store for batch features (default is file-based)
+offline_store:
+    type: file
+entity_key_serialization_version: 3

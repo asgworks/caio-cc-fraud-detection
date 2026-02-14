@@ -3,6 +3,11 @@ numpy
 pandas
 scikit-learn
 
+# MLOps
+mlflow
+mlflow-skinny
+feast
+
 # API
 fastapi
 uvicorn[standard]

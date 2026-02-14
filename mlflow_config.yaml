@@ -1,0 +1,5 @@
+# MLflow Configuration
+tracking_uri: ./mlruns
+artifact_location: ./mlartifacts
+default_experiment_name: fraud_detection
+backend_store_uri: sqlite:///mlflow.db
