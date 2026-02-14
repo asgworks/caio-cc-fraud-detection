@@ -1,45 +1,41 @@
 """
 Fraud Detection Feature Definitions for Feast
-
-NOTE: This is a simplified version that uses basic transaction features.
-The current data (X_train.csv) doesn't have timestamp columns yet.
-To use Feast properly, you'll need to:
-1. Add timestamp columns to your data
-2. Create aggregated feature files (customer_aggregates, merchant_aggregates)
-
-For now, this file shows the structure but may not work with `feast apply`
-until the data is properly prepared.
 """
 from datetime import timedelta
 from feast import Entity, FeatureView, Field, FileSource, FeatureService
 from feast.types import Float32, Int64, String
+from feast.value_type import ValueType
 
-# Note: Feast requires timestamps in data sources
-# Your current X_train.csv doesn't have timestamps
-# This is a template showing how features SHOULD be defined
-
-# For a working example, you would need to:
-# 1. Add a timestamp column to your processed data
-# 2. Use the raw data (fraudTrain.csv) which has trans_date_trans_time
-
-# Example of what the features would look like:
-"""
-# Entities with value_type specified
+# Define entities with value_type
 transaction = Entity(
     name="transaction",
     join_keys=["trans_num"],
     description="Transaction identifier",
-    value_type=String
+    value_type=ValueType.STRING
 )
 
-# Basic transaction features using existing columns
+customer = Entity(
+    name="customer",
+    join_keys=["cc_num"],
+    description="Credit card number (customer identifier)",
+    value_type=ValueType.STRING
+)
+
+merchant = Entity(
+    name="merchant",
+    join_keys=["merchant"],
+    description="Merchant identifier",
+    value_type=ValueType.STRING
+)
+
+# Transaction features data source (with timestamps!)
 transaction_source = FileSource(
     name="transaction_features_source",
-    path="../data/processed/X_train.csv",
-    # Note: X_train.csv doesn't have a timestamp field
-    # You'll need to add one or use raw data
+    path="../data/processed/X_train_with_timestamps.parquet",
+    timestamp_field="timestamp",
 )
 
+# Transaction feature view - basic transaction features
 transaction_features = FeatureView(
     name="transaction_features",
     entities=[transaction],
@@ -53,17 +49,12 @@ transaction_features = FeatureView(
     ],
     online=True,
     source=transaction_source,
-    tags={"team": "fraud_detection", "type": "basic"},
+    tags={"team": "fraud_detection", "type": "transaction"},
 )
 
+# Feature service for fraud detection model
 fraud_detection_v1 = FeatureService(
     name="fraud_detection_v1",
     features=[transaction_features],
-    description="Basic fraud detection features"
+    description="Fraud detection features v1 - basic transaction data"
 )
-"""
-
-# Placeholder - actual features commented out until data has timestamps
-print("Feature definitions are templates only.")
-print("Your data needs timestamp columns before Feast can be used.")
-print("See notebooks/05_feature_store.ipynb for guidance on preparing data.")
