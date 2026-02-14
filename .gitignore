@@ -25,6 +25,7 @@ venv/
 env/
 ENV/
 .venv
+caioenv/
 
 # Jupyter Notebook
 .ipynb_checkpoints
@@ -73,3 +74,13 @@ logs/
 .pytest_cache/
 .coverage
 htmlcov/
+
+# MLflow
+mlruns/
+mlartifacts/
+mlflow.db
+
+# Feast
+feature_store/data/*.db
+feature_store/data/registry/
+*.parquet
